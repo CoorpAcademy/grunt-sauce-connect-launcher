@@ -58,27 +58,24 @@ module.exports = function (grunt) {
 			return deferred.promise;
 		}
 
-		function closeTunnel(proc) {
-			return function () {
-				var deferred = q.defer();
-				proc.close(function () {
-					grunt.log.writeln('Closed'.green + ' Sauce Connect tunnel: ' + tunnel.tid.cyan);
-					deferred.resolve();
-				});
-				return deferred.promise;
-			};
+		function closeTunnel() {
+			var deferred = q.defer();
+			launcher.kill(function() {
+				grunt.log.writeln('Closed'.green + ' Sauce Connect tunnel: ' + tunnel.tid.cyan);
+				deferred.resolve();
+			});
+			return deferred.promise;
 		}
 
 		if (tunnel.process) {
 			// Prevent double closing of the current tunnel process
-			var proc = tunnel.process;
 			delete tunnel.process;
 
 			grunt.log.writeln('Close'.cyan + ' Sauce Connect tunnel: ' + tunnel.tid.cyan);
 
 			obtainMachine()
 				.then(killMachine)
-				.then(closeTunnel(proc))
+				.then(closeTunnel)
 				.fin(function () {
 					callback();
 				});
