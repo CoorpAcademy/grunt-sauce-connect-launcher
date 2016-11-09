@@ -16,14 +16,14 @@
     "node": ">=0.10.x"
   },
   "dependencies": {
-    "sauce-connect-launcher": "^0.13.0",
+    "sauce-connect-launcher": "^1.0.0",
     "request": "^2.65.0",
     "q": "^1.0.1",
-    "lodash": "^2.4.1"
+    "lodash": "^4.16.6"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt": "~0.4.5"
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt": "~1.0.1"
   },
   "peerDependencies": {
     "grunt": ">=0.4.4"
