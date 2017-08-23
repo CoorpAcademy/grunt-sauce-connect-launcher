@@ -1,29 +1,29 @@
 {
   "name": "grunt-sauce-connect-launcher",
   "description": "Grunt plug-in to download and launch an instance of Sauce Labs Sauce Connect",
-  "version": "0.3.2",
-  "homepage": "https://github.com/seckardt/grunt-sauce-connect-launcher",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Coorpacademy/grunt-sauce-connect-launcher",
   "author": "Steffen Eckardt <mosh666@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/seckardt/grunt-sauce-connect-launcher.git"
+    "url": "git://github.com/Coorpacademy/grunt-sauce-connect-launcher.git"
   },
   "bugs": {
-    "url": "https://github.com/seckardt/grunt-sauce-connect-launcher/issues"
+    "url": "https://github.com/Coorpacademy/grunt-sauce-connect-launcher/issues"
   },
   "license": "MIT",
   "engines": {
-    "node": ">=0.10.x"
+    "node": ">=6"
   },
   "dependencies": {
-    "lodash": "^4.17.2",
-    "q": "^1.4.1",
-    "request": "^2.79.0",
-    "sauce-connect-launcher": "^1.1.1"
+    "bluebird": "^3.5.0",
+    "lodash": "^4.17.4",
+    "request": "^2.81.0",
+    "sauce-connect-launcher": "^1.2.2"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt": "~0.4.5"
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0"
   },
   "peerDependencies": {
     "grunt": ">=0.4.4"
@@ -37,5 +37,8 @@
     "sauce connect",
     "sauceconnect",
     "local tunnel"
-  ]
+  ],
+  "scripts": {
+    "test": "grunt test"
+  }
 }
