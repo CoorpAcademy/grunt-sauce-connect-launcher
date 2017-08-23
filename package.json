@@ -1,7 +1,7 @@
 {
   "name": "grunt-sauce-connect-launcher",
   "description": "Grunt plug-in to download and launch an instance of Sauce Labs Sauce Connect",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "homepage": "https://github.com/Coorpacademy/grunt-sauce-connect-launcher",
   "author": "Steffen Eckardt <mosh666@gmail.com>",
   "repository": {
@@ -40,5 +40,5 @@
   ],
   "scripts": {
     "test": "grunt test"
-}
+  }
 }
