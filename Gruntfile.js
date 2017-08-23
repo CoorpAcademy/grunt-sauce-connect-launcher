@@ -32,11 +32,10 @@ module.exports = function (grunt) {
 
 		sauce_connect: {
 			options: _.defaults(options, {
-				username: 'demo',
-				accessKey: '12345678-1234-1234-1234-1234567890ab'
+				username:  process.env.SAUCE_USERNAME,
+				accessKey: process.env.SAUCE_ACCESS_KEY
 			}),
 
-			unit: {},
 			e2e: {}
 		}
 	});
@@ -44,7 +43,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', [
 		'default',
-		'sauce_connect:unit',
 		'sauce_connect:e2e',
 		'sauce-connect-close'
 	]);

@@ -11,61 +11,63 @@
  */
 'use strict';
 
+const _ = require('lodash');
+const Bluebird = require('bluebird');
+
 module.exports = function (grunt) {
 	var launcher = require('sauce-connect-launcher'),
 		tunnel = {};
 
 	function close(callback) {
-		var request = require('request').defaults({jar: false, json: true}),
-			_ = require('lodash'),
-			q = require('q');
+		var request = require('request').defaults({jar: false, json: true});
+			
 
 		function obtainMachine() {
-			var deferred = q.defer();
-			request.get(tunnel.baseUrl + '/tunnels?full=1', function (err, resp, body) {
-				if (err) {
-					return deferred.reject(err);
-				}
-
-				_.every(body, function (tunnelData) {
-					if (tunnelData && tunnelData.tunnel_identifier === tunnel.tid) {
-						deferred.resolve(tunnelData);
-						return false;
+			return new Bluebird(function(resolve, reject) {
+				request.get(tunnel.baseUrl + '/tunnels?full=1', function (err, resp, body) {
+					if (err) {
+						return reject(err);
 					}
-					return true;
-				});
 
-				deferred.reject();
+					const notFounded =_.every(body, function (tunnelData) {
+						if (tunnelData && tunnelData.tunnel_identifier === tunnel.tid) {
+							resolve(tunnelData);
+							return false;
+						}
+						return true;
+					});
+					if (notFounded) {
+						reject(new Error('tunnel id not found' + tunnel.tid));
+					}
+				});
 			});
-			return deferred.promise;
 		}
 
 		function killMachine(tunnelData) {
-			var deferred = q.defer(),
-				tunnelId = tunnelData.id || tunnel.tid;
+			const tunnelId = tunnelData.id || tunnel.tid;
 
 			grunt.log.writeln('Stop'.cyan + ' Sauce Connect machine: ' + tunnelId.cyan);
-
-			request.del(tunnel.baseUrl + '/tunnels/' + tunnelId, function (err, resp, body) {
-				if (err || !body || body.result !== true) {
-					grunt.log.writeln('Failed'.red + ' to stop Sauce Connect machine: ' + tunnelId.cyan);
-				} else {
-					grunt.log.writeln('Stopped'.green + ' Sauce Connect machine: ' + tunnelId.cyan);
-				}
-				deferred.resolve();
+			return new Bluebird(function(resolve, reject) {
+				request.del(tunnel.baseUrl + '/tunnels/' + tunnelId, function (err, resp, body) {
+					if (err || !body || body.result !== true) {
+						grunt.log.writeln('Failed'.red + ' to stop Sauce Connect machine: ' + tunnelId.cyan);
+						return reject(err || new Error('Failed'.red + ' to stop Sauce Connect machine: ' + tunnelId));
+					} else {
+						grunt.log.writeln('Stopped'.green + ' Sauce Connect machine: ' + tunnelId.cyan);
+					}
+					resolve();
+				});
 			});
-
-			return deferred.promise;
 		}
 
 		function closeTunnel(proc) {
 			return function () {
-				var deferred = q.defer();
-				proc.close(function () {
-					grunt.log.writeln('Closed'.green + ' Sauce Connect tunnel: ' + tunnel.tid.cyan);
-					deferred.resolve();
+				return new Bluebird(function(resolve) {
+					proc.close(function () {
+						grunt.log.writeln('Closed'.green + ' Sauce Connect tunnel: ' + tunnel.tid.cyan);
+						resolve();
+					});
 				});
-				return deferred.promise;
 			};
 		}
 
@@ -79,7 +81,7 @@ module.exports = function (grunt) {
 			obtainMachine()
 				.then(killMachine)
 				.then(closeTunnel(proc))
-				.fin(function () {
+				.finally(function () {
 					callback();
 				});
 		} else {
