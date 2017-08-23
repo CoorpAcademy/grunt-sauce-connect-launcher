@@ -2,14 +2,14 @@
   "name": "grunt-sauce-connect-launcher",
   "description": "Grunt plug-in to download and launch an instance of Sauce Labs Sauce Connect",
   "version": "0.3.2",
-  "homepage": "https://github.com/seckardt/grunt-sauce-connect-launcher",
+  "homepage": "https://github.com/Coorpacademy/grunt-sauce-connect-launcher",
   "author": "Steffen Eckardt <mosh666@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/seckardt/grunt-sauce-connect-launcher.git"
+    "url": "git://github.com/Coorpacademy/grunt-sauce-connect-launcher.git"
   },
   "bugs": {
-    "url": "https://github.com/seckardt/grunt-sauce-connect-launcher/issues"
+    "url": "https://github.com/Coorpacademy/grunt-sauce-connect-launcher/issues"
   },
   "license": "MIT",
   "engines": {
