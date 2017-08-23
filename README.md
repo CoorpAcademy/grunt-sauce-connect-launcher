@@ -3,6 +3,8 @@ Grunt plug-in to download and launch an instance of Sauce Labs [Sauce Connect](h
 
 # Forked from https://github.com/seckardt/grunt-sauce-connect-launcher" no more maintened
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/CoorpAcademy/grunt-sauce-connect-launcher.svg)](https://greenkeeper.io/)
+
 ## Getting Started
 
 This plugin requires Grunt `~1.0.0`
