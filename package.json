@@ -39,6 +39,6 @@
     "local tunnel"
   ],
   "scripts": {
-    "test": "grunt testing"
+    "test": "grunt test"
 }
 }
